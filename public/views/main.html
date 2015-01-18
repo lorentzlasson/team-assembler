@@ -1,0 +1,14 @@
+<div class="vertical-center">
+  <div class="col-md-4 col-md-offset-4">
+
+    <div ng-repeat="profile in profiles" class="bot-buffer">
+      <input ng-model="profile.searchText" class="form-control" disabled>
+    </div>
+
+    <form ng-submit="searchProfile()">
+      <div>
+        <input ng-model="searchText" class="form-control" placeholder="Enter name">
+      </div>
+    </form>
+  </div>
+</div>
