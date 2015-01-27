@@ -1,0 +1,73 @@
+module.exports = function(app, https) {
+
+	function callApi(options, payload, callback){
+		var data = "";
+		var apiReq = https.request(options, function(response) {
+			response.on('data', function(d) {
+				data += d;
+			});
+			response.on('end', function() {
+				callback(data);
+			});
+			response.on('error', function(error) {
+				process.stdout.write(error);
+			});
+		});
+		if (payload) {
+			apiReq.write(JSON.stringify(payload));
+		}
+		apiReq.end();
+	}
+
+	app.get("/people-search", function(req, res){
+		var options = {
+			host: "api.linkedin.com",
+			path: "/v1/people-search?first-name="+req.query.firstName+"&last-name="+req.query.lastName,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization" : "Bearer "+req.query.token
+			}
+		};
+
+		callApi(options, null, function(data){
+			res.send(data);
+		});
+	})
+
+	app.post("/accessToken", function(req, res){
+		var code = req.query.code;
+
+		var options = {
+			host: "www.linkedin.com",
+			path: "/uas/oauth2/accessToken?" + 
+				"grant_type=authorization_code"+
+				"&code=" +code+
+				"&scope=r_network"+
+				"&redirect_uri=" +"http://127.0.0.1:3000/"+
+				"&client_id=" +"75s8qsnoh8jt7w"+
+				"&client_secret=" +"A98Kku16qYIEtzDd",
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+
+		var data = "";
+		// console.log("PATH: "+options.path);
+		var apiReq = https.request(options, function(response) {
+			response.on('data', function(d) {
+				data += d;
+			});
+			response.on('end', function() {
+				res.send(data);
+			});
+			response.on('error', function(error) {
+				process.stdout.write(error);
+			});
+		});
+
+		apiReq.end();
+	})
+};
+

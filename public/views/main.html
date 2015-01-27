@@ -1,14 +1,40 @@
-<div class="vertical-center">
-  <div class="col-md-4 col-md-offset-4">
-
-    <div ng-repeat="profile in profiles" class="bot-buffer">
-      <input ng-model="profile.searchText" class="form-control" disabled>
-    </div>
+<div class="">
+  <div class="col-md-4">
+    <h3 class="text-primary">Search</h3>
 
     <form ng-submit="searchProfile()">
       <div>
-        <input ng-model="searchText" class="form-control" placeholder="Enter name">
+        <input ng-model="search.text" class="form-control" placeholder="Enter name">
       </div>
     </form>
+
+    <div ng-repeat="searched in searchedProfiles.slice().reverse()" class="top-buffer" ng-click="focusSearchedProfile(searched)">
+      <input ng-model="searched.text"  
+      class="form-control" ng-class="{'focused-input': searched.focused}" disabled>
+    </div>
+
+    
+  </div>
+  <div class="col-md-4">
+    <h3 class="text-primary">Select</h3>
+
+    <div ng-repeat="suggested in suggestedProfiles" class="well" ng-class="{'focused-input': suggested.selected}"
+    ng-drag="true" ng-drag-data="suggested">
+      <span>{{suggested.firstName}}</span><br>
+      <span>{{suggested.lastName}}</span><br>
+      <span>{{suggested.proffesion}}</span><br>
+    </div>
+
+  </div>
+  <div class="col-md-4">
+    <h3 class="text-primary">List</h3>
+    <div ng-drop="true" ng-drop-success="dropSelectedProfile($data,$event)" ng-class="{'drop-zone': !dragging}">
+      <h3 ng-show="!dragging" class="bold text-muted col-md-offset-3">Drop suggestions</h3>
+      <div ng-repeat="selected in selectedProfiles" class="well">
+        <span>{{selected.firstName}}</span><br>
+        <span>{{selected.lastName}}</span><br>
+        <span>{{selected.proffesion}}</span><br>
+      </div>
+    </div>
   </div>
 </div>

@@ -6,6 +6,23 @@ body {
 	margin-bottom: 5px;
 }
 
+.top-buffer {
+	margin-top: 5px;
+}
+
+.focused-input {
+	border: 3px solid chartreuse;
+}
+
+.profile-card {
+	
+}
+
+.drop-zone {
+	min-height: 100px;
+	border: 3px dashed blue;
+}
+
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */

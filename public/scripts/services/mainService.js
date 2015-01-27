@@ -1,25 +1,24 @@
 app.factory('MainService', function ($http, $window, $location, $routeParams, $route) {
-	// var redirectLinkedin = "https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=752qtw90g4zrsy&state=DCEEFWF45453sdffef424&redirect_uri=http://profilelister.eu-gb.mybluemix.net";
-	
-	var redirectLinkedin = "https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=752qtw90g4zrsy&state=DCEEFWF45453sdffef424&redirect_uri=http://127.0.0.1:3000";
+	var url = $location.absUrl();
+	var redirectLinkedin = "https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=75s8qsnoh8jt7w&state=DCEEFWF45453sdffef424&redirect_uri="+url;
 
 	var token;
 
 	return {
 		searchProfile: function(searchText, callback){
-			var profile = {
-				"firstName": "John",
-				"lastName": "Doe",
-				"title": "Manager",
-				"profession": "IT Architect",
-				"searchText": searchText
-			};
-			callback(profile);
+			var parts = searchText.split(/\s+/);
+			var firstName = parts[0];
+			var lastName = parts[1];
+
+			var path = "/people-search?firstName="+firstName+"&lastName="+lastName+"&token="+token.access_token;
+			$http.get(path)
+			.success(function(response){
+				callback(response);
+			})
 		},
 
 		loadToken: function(){
 			if (!token) {
-
 				var code = $location.search().code;
 				var state = $location.search().state;
 
@@ -27,15 +26,16 @@ app.factory('MainService', function ($http, $window, $location, $routeParams, $r
 					$window.location.href = redirectLinkedin;
 				}
 				else {
-					console.log(code);					
+					// console.log(code);					
 					if (state === "DCEEFWF45453sdffef424"){
 						$http.post("/accessToken?code="+code)
 						.success(function(response){
 							console.log(response);
-						});
+						 	token = response;
+						})
 					}
 				}
-			};
+			}
 		}
 	}
 });
