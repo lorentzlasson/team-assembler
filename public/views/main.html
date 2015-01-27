@@ -1,6 +1,6 @@
 <div class="">
   <div class="col-md-4">
-    <h3 class="text-primary">Search</h3>
+    <h3 class="text-primary">Searches</h3>
 
     <form ng-submit="searchProfile()">
       <div>
@@ -16,7 +16,7 @@
     
   </div>
   <div class="col-md-4">
-    <h3 class="text-primary">Select</h3>
+    <h3 class="text-primary">Suggestions</h3>
 
     <div ng-repeat="suggested in suggestedProfiles" class="well" ng-class="{'focused-input': suggested.selected}"
     ng-drag="true" ng-drag-data="suggested">
@@ -27,9 +27,9 @@
 
   </div>
   <div class="col-md-4">
-    <h3 class="text-primary">List</h3>
+    <h3 class="text-primary">Selections</h3>
     <div ng-drop="true" ng-drop-success="dropSelectedProfile($data,$event)" ng-class="{'drop-zone': !dragging}">
-      <h3 ng-show="!dragging" class="bold text-muted col-md-offset-3">Drop suggestions</h3>
+      <h3 ng-show="!dragging" class="bold text-muted">Drop suggestions</h3>
       <div ng-repeat="selected in selectedProfiles" class="well">
         <span>{{selected.firstName}}</span><br>
         <span>{{selected.lastName}}</span><br>

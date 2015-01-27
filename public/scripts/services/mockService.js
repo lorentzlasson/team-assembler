@@ -14,8 +14,8 @@ app.factory('MockService', function () {
 					"proffesion": "IT-architect"
 				},
 				{
-					"firstName": firstName+"2",
-					"lastName": lastName+"2",
+					"firstName": firstName+" 2",
+					"lastName": lastName+" 2",
 					"proffesion": "Developer"
 				}
 			];
