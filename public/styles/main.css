@@ -10,8 +10,12 @@ body {
 	margin-top: 5px;
 }
 
-.focused-input {
-	border: 3px solid chartreuse;
+.focused {
+	background-color: #9DC8A8;
+}
+
+.selection-complete {
+	border: 3px solid #00C302;
 }
 
 .profile-card {

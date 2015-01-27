@@ -9,21 +9,85 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 
 	$scope.searchProfile = function(){
 		MainService.searchProfile($scope.search.text, function(suggestions){
-			$scope.search.suggestions = suggestions;
+			// Handle error
+			// if (suggestions === Array) {
+			// 	console.log(suggestions);
+			// 	return;
+			// };
 
 			var search = angular.copy($scope.search);
-			$scope.searchedProfiles.push(search);
-			$scope.focusSearchedProfile(search);
 			$scope.search = null;
+
+			search.suggestions = suggestions;
+
+			forEach(search.suggestions, function(item){
+				item.search = search;
+			});
+
+			$scope.searchedProfiles.push(search);
+			$scope.forceFocusSearchedProfile(search);
+
+			if (search.suggestions.length === 1) {
+				$scope.forceSelectProfile(search.suggestions[0]);
+			}
 		})
 	}
 
-	$scope.focusSearchedProfile = function(searched){
-		$scope.suggestedProfiles = searched.suggestions;
+	$scope.forceFocusSearchedProfile = function(searched){
+		focusSearchedProfile(searched);
+
+		var hit = false;
+		forEach($scope.suggestedProfiles, function(item){			
+			if (item.selected) {
+				focusSelectedProfile(item);
+				hit = true
+			}
+		});
+
+		if (!hit) {
+			forEach($scope.selectedProfiles, function(item){
+				item.focused = false;
+			});
+		}
+	}
+
+	$scope.forceFocusSelectedProfile = function(selected){
+		focusSelectedProfile(selected);
+		focusSearchedProfile(selected.search);
+	}
+
+	$scope.forceSelectProfile = function(selected){
+		toggleItemInList(
+			$scope.suggestedProfiles,
+			function(item){
+				return item.id === selected.id;
+			},
+			function(item, value){
+				item.selected = value;
+			}
+		);
+		selectProfile($scope.suggestedProfiles, selected);
+		focusSelectedProfile(selected);
+	}
+
+	function focusSearchedProfile(searched){
 		toggleItemInList(
 			$scope.searchedProfiles,
 			function(item){
-				return item == searched;
+				return item === searched;
+			},
+			function(item, value){
+				item.focused = value;
+			}
+		);
+		$scope.suggestedProfiles = searched.suggestions;
+	}
+
+	function focusSelectedProfile(selected){
+		toggleItemInList(
+			$scope.selectedProfiles,
+			function(item){
+				return item.id === selected.id;
 			},
 			function(item, value){
 				item.focused = value;
@@ -31,33 +95,25 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 		);
 	}
 
-	$scope.dropSelectedProfile = function(data, evt){
-		toggleItemInList(
-			$scope.suggestedProfiles,
-			function(item){
-				return item == data;
-			},
-			function(item, value){
-				item.selected = value;
-
-				// remove all current selections from this search
-				var index = $scope.selectedProfiles.indexOf(item);
-				if (index > -1) {
-			    	$scope.selectedProfiles.splice(index, 1);
-				}
+	function selectProfile(suggestions, profile){
+		forEach(suggestions, function(item){
+			// remove all current selections from this search
+			var index = $scope.selectedProfiles.indexOf(item);
+			if (index > -1) {
+		    	$scope.selectedProfiles.splice(index, 1);
 			}
-		);
-
-		$scope.selectedProfiles.push(data);
+		});
+		profile.search.selectionComplete = true;
+		$scope.selectedProfiles.push(profile);
 	}
 
 	function toggleItemInList(list, condition, toggleItem){
-		changeItemInList(list, function(item){
+		forEach(list, function(item){
 			toggleItem(item, condition(item))
 		});
 	}
 
-	function changeItemInList(list, change){
+	function forEach(list, change){
 		for (var i = list.length - 1; i >= 0; i--) {
 			var item = list[i];
 			change(item);
