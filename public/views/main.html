@@ -4,7 +4,7 @@
 
     <form ng-submit="searchProfile()">
       <div>
-        <input ng-model="search.text" class="form-control" placeholder="Enter name">
+        <input ng-model="search.text" class="form-control" placeholder="firstname lastname">
       </div>
     </form>
 
@@ -13,10 +13,9 @@
       <div class="well" ng-class="{'focused': searched.focused, 'selection-complete': searched.selectionComplete}">
         {{searched.text}}
       </div>
-    </div>
-
-    
+    </div>    
   </div>
+  
   <div class="col-md-4">
     <h3 class="text-primary">Suggestions</h3>
 
@@ -30,7 +29,24 @@
 
   </div>
   <div class="col-md-4">
-    <h3 class="text-primary">Selections</h3>
+    
+    <h3 class="text-primary">
+      Selections
+      <button class="btn btn-default" ng-click="downloadAsCsv()"> 
+            <span class="glyphicon glyphicon-download-alt"></span> 
+            Download as CSV
+        </button>
+        
+      <!-- <div class="input-group">
+       <input class="form-control" ng-model="fileName">
+       <span class="input-group-btn">
+        <button class="btn btn-default" ng-click="downloadAsCsv()"> 
+            <span class="glyphicon glyphicon-download-alt"></span> 
+            Download as CSV
+        </button>
+       </span>       
+      </div> -->
+    </h3>
     <div ng-drop="true" ng-drop-success="forceSelectProfile($data)" ng-class="{'drop-zone': !dragging}">
       <h3 ng-show="!dragging" class="bold text-muted">Drop suggestions</h3>
       <div ng-repeat="selected in selectedProfiles" class="well" ng-click="forceFocusSelectedProfile(selected)"

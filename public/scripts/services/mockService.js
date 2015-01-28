@@ -1,4 +1,4 @@
-app.factory('MockService', function () {
+app.factory('MockService', function ($http, $location) {
 
 	var proffesions = [
 		"IT-architect",
@@ -56,6 +56,17 @@ app.factory('MockService', function () {
 		},
 
 		loadToken: function(){
+		},
+
+		generateCsv: function(documents, fileName){
+			// $location.path('/tmp/llatest.csv')
+			// return;
+
+			$http.post("/generate-csv?fileName="+fileName, documents)
+			.success(function(response){
+				console.log(response);
+				window.location.href = window.location.href +"tmp/"+response;
+			});
 		}
 	}
 });

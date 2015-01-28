@@ -28,7 +28,7 @@ app.factory('MainService', function ($http, $window, $location, $routeParams, $r
 				else {
 					// console.log(code);					
 					if (state === "DCEEFWF45453sdffef424"){
-						$http.post("/accessToken?code="+code)
+						$http.post("/access-token?code="+code)
 						.success(function(response){
 							console.log(response);
 						 	token = response;

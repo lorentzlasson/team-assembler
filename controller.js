@@ -1,4 +1,4 @@
-module.exports = function(app, https) {
+module.exports = function(app, https, fs, json2csvConverter) {
 
 	function callApi(options, payload, callback){
 		var data = "";
@@ -33,9 +33,9 @@ module.exports = function(app, https) {
 		callApi(options, null, function(data){
 			res.send(data);
 		});
-	})
+	});
 
-	app.post("/accessToken", function(req, res){
+	app.post("/access-token", function(req, res){
 		var code = req.query.code;
 
 		var options = {
@@ -43,7 +43,6 @@ module.exports = function(app, https) {
 			path: "/uas/oauth2/accessToken?" + 
 				"grant_type=authorization_code"+
 				"&code=" +code+
-				"&scope=r_network"+
 				"&redirect_uri=" +"http://127.0.0.1:3000/"+
 				"&client_id=" +"75s8qsnoh8jt7w"+
 				"&client_secret=" +"A98Kku16qYIEtzDd",
@@ -68,6 +67,22 @@ module.exports = function(app, https) {
 		});
 
 		apiReq.end();
-	})
+	});
+
+	app.post("/generate-csv", function(req, res){
+		json2csvConverter.json2csv(req.body, function(err, csv){
+			if (err) throw err;
+			var fileName = req.query.fileName+".csv";
+			var path = "./public/tmp/"+fileName;
+			fs.writeFile(path, csv, function(err) {
+			    if(err) {
+			        console.log(err);
+			    } else {
+			        console.log(fileName +" was saved!");
+			        res.send(fileName);
+			    }
+			});
+		}, {DELIMITER: {FIELD: ';'}});
+	});
 };
 

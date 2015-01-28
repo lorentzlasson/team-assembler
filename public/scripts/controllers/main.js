@@ -5,6 +5,7 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 	$scope.suggestedProfiles = [];
 	$scope.selectedProfiles = [];
 
+	$scope.fileName = "list";
 	MainService.loadToken();
 
 	$scope.searchProfile = function(){
@@ -31,6 +32,19 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 				$scope.forceSelectProfile(search.suggestions[0]);
 			}
 		})
+	}
+
+	$scope.downloadAsCsv = function(){
+		var profileList = angular.copy($scope.selectedProfiles);
+		var keep = ['firstName', 'lastName', 'proffesion', 'company'];
+		forEach(profileList, function(obj){	
+			for (var prop in obj) {
+		        if (keep.indexOf(prop) < 0) {
+		            delete obj[prop];
+		        }             
+	    	}
+		});
+		MainService.generateCsv(profileList, $scope.fileName);
 	}
 
 	$scope.forceFocusSearchedProfile = function(searched){
