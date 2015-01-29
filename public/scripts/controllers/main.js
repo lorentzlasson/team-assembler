@@ -7,7 +7,8 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 
 	$scope.csv = {
 		fileName: "list",
-		separator: ";"
+		separator: ";",
+		headers: ['First name', 'Last name', 'Proffesion', 'Company']
 	}	
 	
 	MainService.loadToken();

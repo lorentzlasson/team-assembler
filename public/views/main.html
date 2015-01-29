@@ -38,7 +38,8 @@
 
       <div class="input-group">
         <button type="button" class="btn btn-default btn-sm" 
-        ng-csv="downloadAsCsv()" field-separator="{{csv.separator}}" filename="{{csv.fileName}}.csv">
+        ng-csv="downloadAsCsv()" csv-header="['First name', 'Last name', 'Proffesion', 'Company']" 
+        field-separator="{{csv.separator}}" filename="{{csv.fileName}}.csv">
           <span class="glyphicon glyphicon-download-alt"></span> 
           Download as CSV
         </button>
