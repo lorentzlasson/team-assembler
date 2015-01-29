@@ -32,20 +32,10 @@
     
     <h3 class="text-primary">
       Selections
-      <button class="btn btn-default" ng-click="downloadAsCsv()"> 
-            <span class="glyphicon glyphicon-download-alt"></span> 
-            Download as CSV
-        </button>
-        
-      <!-- <div class="input-group">
-       <input class="form-control" ng-model="fileName">
-       <span class="input-group-btn">
-        <button class="btn btn-default" ng-click="downloadAsCsv()"> 
-            <span class="glyphicon glyphicon-download-alt"></span> 
-            Download as CSV
-        </button>
-       </span>       
-      </div> -->
+      <button class="btn btn-default" ng-csv="downloadAsCsv()" field-separator=";" filename="test.csv"> 
+          <span class="glyphicon glyphicon-download-alt"></span> 
+          Download as CSV
+      </button>
     </h3>
     <div ng-drop="true" ng-drop-success="forceSelectProfile($data)" ng-class="{'drop-zone': !dragging}">
       <h3 ng-show="!dragging" class="bold text-muted">Drop suggestions</h3>

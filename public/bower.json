@@ -17,6 +17,7 @@
     "angular": "~1.3.9",
     "angular-route": "~1.3.9",
     "angular-bootstrap": "~0.12.0",
-    "ngDraggable": "~0.0.31"
+    "ngDraggable": "~0.0.31",
+    "ng-csv": "~0.3.1"
   }
 }

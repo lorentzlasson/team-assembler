@@ -69,6 +69,7 @@ module.exports = function(app, https, fs, json2csvConverter) {
 		apiReq.end();
 	});
 
+	// Not used
 	app.post("/generate-csv", function(req, res){
 		json2csvConverter.json2csv(req.body, function(err, csv){
 			if (err) throw err;

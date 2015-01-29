@@ -44,9 +44,10 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 		        }             
 	    	}
 		});
-		MainService.generateCsv(profileList, $scope.fileName);
-	}
 
+		return profileList;
+	}
+	
 	$scope.forceFocusSearchedProfile = function(searched){
 		focusSearchedProfile(searched);
 
