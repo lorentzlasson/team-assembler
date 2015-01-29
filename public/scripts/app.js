@@ -1,4 +1,4 @@
-var app = angular.module('myApp',['ngRoute', 'ngDraggable', 'ngCsv']);
+var app = angular.module('myApp',['ui.bootstrap', 'ngRoute', 'ngDraggable', 'ngCsv']);
 
 app.config(function ($routeProvider, $locationProvider) {
   $routeProvider

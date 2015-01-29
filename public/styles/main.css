@@ -18,6 +18,17 @@ body {
 	border: 3px solid #00C302;
 }
 
+.input-xs {
+	padding-bottom: 2px;
+	width: 15px;
+	height: 30px;
+	border: none;
+}
+
+.input-group {
+	margin-top: 20px;
+}
+
 .profile-card {
 	
 }
@@ -28,8 +39,8 @@ body {
 }
 
 .vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
+  min-height: 100%;
+  min-height: 100vh;
 
   display: flex;
   align-items: center;

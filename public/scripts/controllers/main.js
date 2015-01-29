@@ -5,7 +5,11 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 	$scope.suggestedProfiles = [];
 	$scope.selectedProfiles = [];
 
-	$scope.fileName = "list";
+	$scope.csv = {
+		fileName: "list",
+		separator: ";"
+	}	
+	
 	MainService.loadToken();
 
 	$scope.searchProfile = function(){

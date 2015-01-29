@@ -30,14 +30,23 @@
   </div>
   <div class="col-md-4">
     
-    <h3 class="text-primary">
-      Selections
-      <button class="btn btn-default" ng-csv="downloadAsCsv()" field-separator=";" filename="profile-list.csv"> 
+    <h3 class="text-primary col-md-4">
+      Selections      
+    </h3>
+
+    <div class="col-md-6">
+
+      <div class="input-group">
+        <button type="button" class="btn btn-default btn-sm" 
+        ng-csv="downloadAsCsv()" field-separator="{{csv.separator}}" filename="{{csv.fileName}}.csv">
           <span class="glyphicon glyphicon-download-alt"></span> 
           Download as CSV
-      </button>
-    </h3>
-    <div ng-drop="true" ng-drop-success="forceSelectProfile($data)" ng-class="{'drop-zone': !dragging}">
+        </button>
+        <input class="input-xs" ng-model="csv.separator">
+      </div>
+    </div>
+
+    <div class="col-md-12" ng-drop="true" ng-drop-success="forceSelectProfile($data)" ng-class="{'drop-zone': !dragging}">
       <h3 ng-show="!dragging" class="bold text-muted">Drop suggestions</h3>
       <div ng-repeat="selected in selectedProfiles" class="well" ng-click="forceFocusSelectedProfile(selected)"
       ng-class="{'focused': selected.focused}">
