@@ -44,10 +44,10 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 		var keep = ['firstName', 'lastName', 'proffesion', 'company'];
 		forEach(profileList, function(obj){	
 			for (var prop in obj) {
-		        if (keep.indexOf(prop) < 0) {
-		            delete obj[prop];
-		        }             
-	    	}
+				if (keep.indexOf(prop) < 0) {
+					delete obj[prop];
+				}             
+			}
 		});
 
 		return profileList;
@@ -85,7 +85,7 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 			function(item, value){
 				item.selected = value;
 			}
-		);
+			);
 		selectProfile($scope.suggestedProfiles, selected);
 		focusSelectedProfile(selected);
 	}
@@ -99,7 +99,7 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 			function(item, value){
 				item.focused = value;
 			}
-		);
+			);
 		$scope.suggestedProfiles = searched.suggestions;
 	}
 
@@ -112,7 +112,7 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 			function(item, value){
 				item.focused = value;
 			}
-		);
+			);
 	}
 
 	function selectProfile(suggestions, profile){
@@ -120,7 +120,7 @@ app.controller('MainCtrl', function($scope, MainService, MockService){
 			// remove all current selections from this search
 			var index = $scope.selectedProfiles.indexOf(item);
 			if (index > -1) {
-		    	$scope.selectedProfiles.splice(index, 1);
+				$scope.selectedProfiles.splice(index, 1);
 			}
 		});
 		profile.search.selectionComplete = true;
